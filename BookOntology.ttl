@@ -1,0 +1,479 @@
+@prefix : <http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/> .
+
+<http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology> rdf:type owl:Ontology ;
+                                                                        rdfs:comment "The book ontology that describe different books." .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#integer
+xsd:integer rdfs:comment [ ] ;
+owl:equivalentClass rdfs:Literal .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasAddress
+:hasAddress rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ,
+                     owl:AsymmetricProperty ,
+                     owl:IrreflexiveProperty ;
+            rdfs:domain :Building ;
+            rdfs:range :Address .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasAuthor
+:hasAuthor rdf:type owl:ObjectProperty ;
+           owl:inverseOf :hasBook ;
+           rdf:type owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty ;
+           rdfs:domain :Book ;
+           rdfs:range :Author .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasBook
+:hasBook rdf:type owl:ObjectProperty ,
+                  owl:AsymmetricProperty ,
+                  owl:IrreflexiveProperty ;
+         rdfs:domain :Author ;
+         rdfs:range :Book .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasBooks
+:hasBooks rdf:type owl:ObjectProperty ,
+                   owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty ;
+          rdfs:domain :Library ;
+          rdfs:range :Book .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasCity
+:hasCity rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :hasAddress ;
+         rdf:type owl:AsymmetricProperty ,
+                  owl:IrreflexiveProperty ;
+         rdfs:domain :Address ;
+         rdfs:range :City .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasCountry
+:hasCountry rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :hasAddress ;
+            rdf:type owl:AsymmetricProperty ,
+                     owl:IrreflexiveProperty ;
+            rdfs:domain :Address ;
+            rdfs:range :Country .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasCover
+:hasCover rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :hasBook ;
+          rdf:type owl:FunctionalProperty ,
+                   owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty ;
+          rdfs:domain [ rdf:type owl:Restriction ;
+                        owl:onProperty :hasCover ;
+                        owl:someValuesFrom :Book
+                      ] ;
+          rdfs:range [ rdf:type owl:Restriction ;
+                       owl:onProperty :hasCover ;
+                       owl:someValuesFrom :Cover
+                     ] .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasPrequel
+:hasPrequel rdf:type owl:ObjectProperty ,
+                     owl:AsymmetricProperty ,
+                     owl:TransitiveProperty ,
+                     owl:IrreflexiveProperty ;
+            rdfs:domain :Book ;
+            rdfs:range :Book .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasPublisher
+:hasPublisher rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ,
+                       owl:AsymmetricProperty ,
+                       owl:IrreflexiveProperty ;
+              rdfs:domain :Book ;
+              rdfs:range :Publisher .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasSameAuthorLike
+:hasSameAuthorLike rdf:type owl:ObjectProperty ,
+                            owl:SymmetricProperty ,
+                            owl:ReflexiveProperty ;
+                   rdfs:domain :Book ;
+                   rdfs:range :Book .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasEmail
+:hasEmail rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Author ;
+          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasISBN
+:hasISBN rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Book ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasLanguage
+:hasLanguage rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Book ;
+             rdfs:range xsd:language .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasName
+:hasName rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Person ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasPagesCount
+:hasPagesCount rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Book ;
+               rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasPrice
+:hasPrice rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Book ;
+          rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasPublicationDate
+:hasPublicationDate rdf:type owl:DatatypeProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain :Book ;
+                    rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasRate
+:hasRate rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Book ;
+         rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasStreet
+:hasStreet rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Address ;
+           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/hasTitle
+:hasTitle rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Book ;
+          rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology#Children's
+<http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology#Children's> rdf:type owl:Class ;
+                                                                                  rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Address
+:Address rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Author
+:Author rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Biography
+:Biography rdf:type owl:Class ;
+           rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Book
+:Book rdf:type owl:Class ;
+      rdfs:label [ :hasTitle ""
+                 ] .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Building
+:Building rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/City
+:City rdf:type owl:Class ;
+      owl:equivalentClass [ rdf:type owl:Class ;
+                            owl:oneOf ( :Sofia
+                                      )
+                          ] ;
+      rdfs:subClassOf :Address .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Classic
+:Classic rdf:type owl:Class ;
+         rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Comedy
+:Comedy rdf:type owl:Class ;
+        rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Comic
+:Comic rdf:type owl:Class ;
+       rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Country
+:Country rdf:type owl:Class ;
+         owl:equivalentClass [ rdf:type owl:Class ;
+                               owl:oneOf ( :Bulgaria
+                                         )
+                             ] ;
+         rdfs:subClassOf :Address .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Cover
+:Cover rdf:type owl:Class ;
+       owl:equivalentClass [ rdf:type owl:Class ;
+                             owl:oneOf ( :EBook
+                                         :Hardcover
+                                         :Paperback
+                                       )
+                           ] .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Drama
+:Drama rdf:type owl:Class ;
+       rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Fantasy
+:Fantasy rdf:type owl:Class ;
+         rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Genre
+:Genre rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Historical
+:Historical rdf:type owl:Class ;
+            rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Horror
+:Horror rdf:type owl:Class ;
+        rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Library
+:Library rdf:type owl:Class ;
+         rdfs:subClassOf :Building .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Mystery
+:Mystery rdf:type owl:Class ;
+         rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Person
+:Person rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Poetry
+:Poetry rdf:type owl:Class ;
+        rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Publisher
+:Publisher rdf:type owl:Class ;
+           rdfs:subClassOf :Building .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Romance
+:Romance rdf:type owl:Class ;
+         rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Science
+:Science rdf:type owl:Class ;
+         rdfs:subClassOf :Genre .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Street
+:Street rdf:type owl:Class ;
+        rdfs:subClassOf :Address .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology#Simon&Schuster
+<http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology#Simon&Schuster> rdf:type owl:NamedIndividual ,
+                                                                                               :Publisher .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/AddressBloomsbury
+:AddressBloomsbury rdf:type owl:NamedIndividual ,
+                            :Address .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/AddressBulgarianNationalLibrary
+:AddressBulgarianNationalLibrary rdf:type owl:NamedIndividual ,
+                                          :Address ;
+                                 :hasCity :Sofia ;
+                                 :hasCountry :Bulgaria ;
+                                 :hasStreet "Vasil Levski Blvd." .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Bloomsbury
+:Bloomsbury rdf:type owl:NamedIndividual ,
+                     :Publisher ;
+            :hasAddress :AddressBloomsbury .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Bulgaria
+:Bulgaria rdf:type owl:NamedIndividual ,
+                   :Country .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/EBook
+:EBook rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Hardcover
+:Hardcover rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/HarryPotter1
+:HarryPotter1 rdf:type owl:NamedIndividual ,
+                       :Book ,
+                       :Fantasy ;
+              :hasAuthor :JKRowling ;
+              :hasCover :Hardcover ;
+              :hasPublisher :Bloomsbury ;
+              :hasSameAuthorLike :HarryPotter2 ,
+                                 :HarryPotter3 ;
+              :hasISBN "978-0590353427" ;
+              :hasLanguage "English"@en ;
+              :hasPagesCount 223 ;
+              :hasPrice 9.66 ;
+              :hasPublicationDate "1997-06-26"^^xsd:dateTime ;
+              :hasRate 4.7 ;
+              :hasTitle "Harry Potter and the Philosopher's Stone" .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/HarryPotter2
+:HarryPotter2 rdf:type owl:NamedIndividual ,
+                       :Book ,
+                       :Fantasy ;
+              :hasAuthor :JKRowling ;
+              :hasCover :Hardcover ;
+              :hasPrequel :HarryPotter1 ;
+              :hasPublisher :Bloomsbury ;
+              :hasSameAuthorLike :HarryPotter1 ,
+                                 :HarryPotter3 ;
+              :hasISBN "0-7475-3849-2" ;
+              :hasLanguage "English"@en ;
+              :hasPagesCount 251 ;
+              :hasPrice 37.99 ;
+              :hasPublicationDate "1998-07-01"^^xsd:dateTime ;
+              :hasRate 4.8 ;
+              :hasTitle "Harry Potter and the Chamber of Secrets" .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/HarryPotter3
+:HarryPotter3 rdf:type owl:NamedIndividual ,
+                       :Book ,
+                       :Fantasy ;
+              :hasAuthor :JKRowling ;
+              :hasCover :Hardcover ;
+              :hasPrequel :HarryPotter2 ;
+              :hasPublisher :Bloomsbury ;
+              :hasSameAuthorLike :HarryPotter1 ,
+                                 :HarryPotter2 ;
+              :hasISBN "0-7475-4215-5" ;
+              :hasLanguage "English"@en ;
+              :hasPagesCount 317 ;
+              :hasPrice 9.66 ;
+              :hasPublicationDate "1999-07-08"^^xsd:dateTime ;
+              :hasRate 4.7 ;
+              :hasTitle "Harry Potter and the Prisoner of Azkaban" .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/JKRowling
+:JKRowling rdf:type owl:NamedIndividual ,
+                    :Author ;
+           :hasBook :HarryPotter1 ,
+                    :HarryPotter2 ,
+                    :HarryPotter3 ;
+           :hasEmail "info@jkrowling.com" ;
+           :hasName "Joanne Rowling" .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/NationalLibraryStStCyrilAndMethodius
+:NationalLibraryStStCyrilAndMethodius rdf:type owl:NamedIndividual ,
+                                               :Library ;
+                                      :hasAddress :AddressBulgarianNationalLibrary ;
+                                      :hasBooks :HarryPotter1 ,
+                                                :HarryPotter2 ,
+                                                :HarryPotter3 .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Paperback
+:Paperback rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/Sofia
+:Sofia rdf:type owl:NamedIndividual ,
+                :City .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/SteveJobs
+:SteveJobs rdf:type owl:NamedIndividual ,
+                    :Biography ,
+                    :Book ;
+           :hasAuthor :WalterIsaacson ;
+           :hasPublisher <http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology#Simon&Schuster> ;
+           :hasISBN "1-4516-4853-7" ;
+           :hasLanguage "English"@en ;
+           :hasPagesCount "630"^^xsd:int ;
+           :hasPrice 23.29 ;
+           :hasPublicationDate "2011-10-24"^^xsd:dateTime ;
+           :hasRate 4.7 ;
+           :hasTitle "Steve Jobs by Walter Isaacson" .
+
+
+###  http://www.semanticweb.org/fnadezhda/ontologies/2024/0/book_ontology/WalterIsaacson
+:WalterIsaacson rdf:type owl:NamedIndividual ,
+                         :Author ;
+                :hasBook :SteveJobs ;
+                :hasEmail "wisaacson@gmail.com" ;
+                :hasName "Walter Isaacson" .
+
+
+[ :hasISBN ""
+] .
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
